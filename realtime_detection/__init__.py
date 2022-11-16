@@ -7,11 +7,28 @@ Geo : 5.38 LS - 102.38 BT
 Location : Pusat gempa berada di laut 12 km Tenggara Enggano
 Scale : Dirasakan (Skala MMI): II Enggano
 """
+from bs4 import BeautifulSoup
+import requests
 
 def extract_data():
+
+    try:
+        content = requests.get('https://www.bmkg.go.id/')
+        content.status_code
+
+    except Exception:
+        return None
+    if content.status_code == 200:
+        soup = BeautifulSoup(content.text, 'html.parser')
+        date = soup.find('span', {'class': 'waktu'})
+        time = date.text.split(', ')[1]
+
+        # print(soup.prettify())
+
+
     result = dict()
-    result['date'] = "16 November 2022"
-    result['time'] = "16:22:45 WIB"
+    result['date'] = date.text.split(', ')[0] #"16 November 2022"
+    result['time'] = time #"16:22:45 WIB"
     result['magnitudo'] = "5.3"
     result['depth'] = "26 km"
     result['geo'] = {
