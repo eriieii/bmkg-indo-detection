@@ -1,7 +1,7 @@
 #Application Detection Earthquake Indo BMKG
-from realtime_detection import extract_data, view_data
+import realtime_detection
 
 if __name__ == "__main__":
     print("Aplikasi Utama")
-    result = extract_data()
-    view_data(result)
+    result = realtime_detection .extract_data()
+    realtime_detection .view_data(result)
