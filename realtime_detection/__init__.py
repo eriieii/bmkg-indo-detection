@@ -20,23 +20,44 @@ def extract_data():
         return None
     if content.status_code == 200:
         soup = BeautifulSoup(content.text, 'html.parser')
-        date = soup.find('span', {'class': 'waktu'})
-        time = date.text.split(', ')[1]
+        result = soup.find('span', {'class': 'waktu'})
+        result = result.text.split(', ')
+        date = result[0]
+        time = result[1]
 
-        # print(soup.prettify())
+
+        result = soup.find('div', {'class': 'col-md-6 col-xs-6 gempabumi-detail no-padding'})
+        result = result.findChildren('li')
+
+        i = 0
+        for res in result:
+            #print(i, res)
+            if i == 1:
+                magnitudo = res.text
+            elif i == 2:
+                depth = res.text
+            elif i == 3:
+                geo = res.text.split(' - ')
+                ls = geo[0]
+                bt = geo[1]
+            elif i == 4:
+                location = res.text
+            elif i == 5:
+                scale = res.text
+            i = i + 1
 
 
     result = dict()
-    result['date'] = date.text.split(', ')[0] #"16 November 2022"
+    result['date'] = date #"16 November 2022"
     result['time'] = time #"16:22:45 WIB"
-    result['magnitudo'] = "5.3"
-    result['depth'] = "26 km"
+    result['magnitudo'] = magnitudo #"5.3"
+    result['depth'] = depth #"26 km"
     result['geo'] = {
-        'ls' : 5.38,
-        'bt' : 102.38,
-        'location' : "Pusat gempa berada di laut 12 km Tenggara Enggano",
+        'ls' : ls,
+        'bt' : bt,
+        'location' : location,
     }
-    result['scale'] = "Dirasakan (Skala MMI): II Enggano"
+    result['scale'] = scale
 
     return result
 
@@ -46,5 +67,5 @@ def view_data(result):
     print(f"Tanggal {result['date']} Pada Jam {result['time']}")
     print(f"Dengan Kekuatan Gempa Sebesar {result['magnitudo']} magnitudo")
     print(f"Di Kedalaman {result['depth']}")
-    print(f"Lokasi di {result['geo']['ls']} Lintang Selatan - {result['geo']['bt']} Bujur Timur")
+    print(f"Lokasi di {result['geo']['ls']} - {result['geo']['bt']}")
     print(f"{result['geo']['location']} {result['scale']}")
