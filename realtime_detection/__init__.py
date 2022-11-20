@@ -94,7 +94,23 @@ class EarthQuakeIndo(Disaster):
         print(f"Lokasi di {self.result['geo']['ls']} - {self.result['geo']['bt']}")
         print(f"{self.result['geo']['location']} {self.result['scale']}")
 
+
+class FloodIndo(Disaster):
+    def __init__(self, url):
+        super(FloodIndo, self).__init__(url, "NOT YET IMPLEMENTED, but it should return last flood in Indonesia")
+
+    def extract_data(self):
+        pass
+
+    def view_data(self):
+        pass
+
+
 if __name__ == '__main__':
     disaster_EarthQuakeIndo = EarthQuakeIndo('https://www.bmkg.go.id/')
     print(disaster_EarthQuakeIndo.description)
     disaster_EarthQuakeIndo.run()
+
+    disaster_FloodIndo = FloodIndo('NOT YET')
+    print(disaster_FloodIndo.description)
+    disaster_FloodIndo.run()
