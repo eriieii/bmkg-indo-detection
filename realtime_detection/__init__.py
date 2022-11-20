@@ -127,3 +127,4 @@ if __name__ == '__main__':
     for Disaster in list_disaster:
         Disaster.view_description()
 
+
