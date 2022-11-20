@@ -10,15 +10,30 @@ Scale : Dirasakan (Skala MMI): II Enggano
 from bs4 import BeautifulSoup
 import requests
 
-
-class EarthQuakeIndo:
-    def __init__(self):
-        self.description = "Latest Earthquake Data Based on BMKG"
+class Disaster:
+    def __init__(self, url, description):
+        self.description = description #"Latest Earthquake Data Based on BMKG"
         self.result = None
+        self.url = url
+
+    def extract_data(self):
+        pass
+
+    def view_data(self):
+        pass
+
+    def run(self):
+        self.extract_data()
+        self.view_data()
+
+class EarthQuakeIndo(Disaster):
+    def __init__(self, url):
+        super(EarthQuakeIndo, self).__init__(url, "Latest Earthquake Data Based on BMKG")
+
     def extract_data(self):
 
         try:
-            content = requests.get('https://www.bmkg.go.id/')
+            content = requests.get(self.url)
             content.status_code
 
         except Exception:
@@ -79,8 +94,7 @@ class EarthQuakeIndo:
         print(f"Lokasi di {self.result['geo']['ls']} - {self.result['geo']['bt']}")
         print(f"{self.result['geo']['location']} {self.result['scale']}")
 
-if __name__ == "__main__":
-    var = EarthQuakeIndo()
-    print(var.description)
-    var.extract_data()
-    var.view_data()
+if __name__ == '__main__':
+    disaster_EarthQuakeIndo = EarthQuakeIndo('https://www.bmkg.go.id/')
+    print(disaster_EarthQuakeIndo.description)
+    disaster_EarthQuakeIndo.run()
