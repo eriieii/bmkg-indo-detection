@@ -16,6 +16,9 @@ class Disaster:
         self.result = None
         self.url = url
 
+    def view_description(self):
+        print(self.description)
+
     def extract_data(self):
         pass
 
@@ -99,6 +102,8 @@ class FloodIndo(Disaster):
     def __init__(self, url):
         super(FloodIndo, self).__init__(url, "NOT YET IMPLEMENTED, but it should return last flood in Indonesia")
 
+    def view_description(self):
+        print(f"UNDER CONTSTRUCTION {self.description}")
     def extract_data(self):
         pass
 
@@ -108,9 +113,17 @@ class FloodIndo(Disaster):
 
 if __name__ == '__main__':
     disaster_EarthQuakeIndo = EarthQuakeIndo('https://www.bmkg.go.id/')
-    print(disaster_EarthQuakeIndo.description)
+    #print(disaster_EarthQuakeIndo.description)
+    disaster_EarthQuakeIndo.view_description()
     disaster_EarthQuakeIndo.run()
 
     disaster_FloodIndo = FloodIndo('NOT YET')
-    print(disaster_FloodIndo.description)
+   # print(disaster_FloodIndo.description)
+    disaster_FloodIndo.view_description()
     disaster_FloodIndo.run()
+
+    list_disaster = [disaster_EarthQuakeIndo, disaster_FloodIndo]
+    print("\nALl List Disaster")
+    for Disaster in list_disaster:
+        Disaster.view_description()
+
